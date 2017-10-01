@@ -83,7 +83,7 @@ class UpdateTokenApi(APIView):
         device_type_id = request.data.get('device_type_id')
 
         print device_id, device_type_id
-        device = Device.objects.get(device_id=device_id)
+        device = Device.objects.get(id=device_id)
         device.device_registration_id = device_type_id
         device.save()
 
