@@ -124,7 +124,7 @@ class CreateEventApi(APIView):
         temp = {"image":"", "location":[float(event.location.latitude),float(event.location.longitude)],
                     "upvote":event.upvote,"downvote":event.downvote,
                     "percentage":(event.upvote/float(event.upvote+event.downvote))*100,
-                    "eventKey":event.event_key}            
+                    "eventKey":str(event.event_key)}            
         registration_ids = [i.device.device_registration_id for i in valid_trips]
         data_message = {
            "event" : temp,
