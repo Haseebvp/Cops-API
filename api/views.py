@@ -135,9 +135,14 @@ class CreateEventApi(APIView):
                 if distance <=0.01:
                     valid_trips.append(trip)
                     break 
+
+        temp = {"image":"", "location":[float(event.location.latitude),float(event.location.longitude)],
+                    "upvote":event.upvote,"downvote":event.downvote,
+                    "percentage":(event.upvote/float(event.upvote+event.downvote))*100,
+                    "eventKey":event.event_key}            
         registration_ids = [i.device.device_registration_id for i in valid_trips]
         data_message = {
-           "event" : event,
+           "event" : temp,
            }
         message_title = "Rapido update!"
         message_body = "Police on your route!!"
@@ -172,7 +177,7 @@ class StopTripApi(APIView):
     authentication_classes = (DemoTokenAuthentication,)
     def post(self, request):
         trip_key = request.data.get('tripKey')
-        trip = Trip.objects.get(trip_key=tripKey)
+        trip = Trip.objects.get(trip_key=trip_key)
         trip.finished = True
         trip.save()
         return Response({
