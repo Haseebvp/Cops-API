@@ -68,15 +68,15 @@ class GetTokenApi(APIView):
             pass
         session = Session.objects.create(device=device)
         print created
-        registration_ids = [i.device_registration_id for i in Device.objects.all()]
-        data_message = {
-           "latitude" : "45455454",
-           "longitude" : "55554554",
-           }
-        message_title = "Rapido update"
-        message_body = "Police on your route!!"
-        result = push_service.notify_multiple_devices(registration_ids=registration_ids,
-            message_title=message_title, message_body=message_body, data_message=data_message)
+        # registration_ids = [i.device_registration_id for i in Device.objects.all()]
+        # data_message = {
+        #    "latitude" : "45455454",
+        #    "longitude" : "55554554",
+        #    }
+        # message_title = "Rapido update"
+        # message_body = "Police on your route!!"
+        # result = push_service.notify_multiple_devices(registration_ids=registration_ids,
+        #     message_title=message_title, message_body=message_body, data_message=data_message)
         return Response({
             "status": "OK",
             "token": session.token,
@@ -97,12 +97,12 @@ class UpdateTokenApi(APIView):
         device.device_registration_id = device_type_id
         device.save()
 
-        registration_ids = [i.device_registration_id for i in Device.objects.all()]
-        message_title = "Rapido update"
-        message_body = "Police on your route!!"
+        # registration_ids = [i.device_registration_id for i in Device.objects.all()]
+        # message_title = "Rapido update"
+        # message_body = "Police on your route!!"
  
-        result = push_service.notify_multiple_devices(registration_ids=registration_ids,
-            message_title=message_title, message_body=message_body)
+        # result = push_service.notify_multiple_devices(registration_ids=registration_ids,
+        #     message_title=message_title, message_body=message_body)
         return Response({
             "status": "OK",
             "token": device_type_id,
@@ -133,7 +133,7 @@ class CreateEventApi(APIView):
                 p1 = [float(p.latitude),float(p.longitude)]
                 distance = calculate_distance(p1,p2)
                 if distance <=0.01:
-                    valid_trips.append(e)
+                    valid_trips.append(trip)
                     break 
         registration_ids = [i.device.device_registration_id for i in valid_trips]
         data_message = {
