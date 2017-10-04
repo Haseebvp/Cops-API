@@ -131,8 +131,8 @@ class CreateEventApi(APIView):
            }
         message_title = "Rapido update!"
         message_body = "Police on your route!!"
-        result = push_service.notify_multiple_devices(registration_ids=registration_ids,
-            message_title=message_title, message_body=message_body, data_message=data_message)
+        if len(registration_ids) > 0:
+            result = push_service.notify_multiple_devices(registration_ids=registration_ids,message_title=message_title, message_body=message_body, data_message=data_message)
         return Response({
             "status": "OK"
         }, status=status.HTTP_200_OK
